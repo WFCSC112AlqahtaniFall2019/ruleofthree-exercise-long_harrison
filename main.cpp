@@ -7,11 +7,25 @@ public:
     IntList ( const IntList & lis );
     ~ IntList ();
     int getSize () const { return size_ ; }
-    IntList & operator =( const IntList & rhs );
+    IntList&  operator =( const IntList& rhs );
+    //IntList & operator =( const IntList & rhs );
 private :
     int * list_ ; // list of values ( int )
     int size_ ;
 };
+void swap (int* a, int* b);
+
+int main(){
+
+    IntList L1 (5,0);
+    //4- declare L2 and make that l2=l1 is properly working
+    IntList L2 (L1);
+    L2 = L1;
+
+    return 0;
+}
+
+
 
 IntList::IntList ( int size  , int initvalue) {
     if( size > 0){
@@ -24,21 +38,35 @@ IntList::IntList ( int size  , int initvalue) {
         list_ = 0;
         size_ = 0;
     }
-
 }
 
 //1) write a definition for the destructor
-
+IntList :: ~IntList(){
+    cout << "Destructor Calls" << endl;
+    delete list_;
+}
 
 //2) fix the copy constructor
 IntList :: IntList ( const IntList & L ){
-    list_ = L . list_ ;
+    cout << "Copy Constructor Calls" << endl;
+    //list_ = L . list_ ;
     size_ = L . size_ ;
+    list_ = new int;
+    *list_ = *(L.list_);
+    //size_ = new int;
+    //*size_ = *(L.size_);
 }
 
 //3) rewrite the copy assignment operator using an optimized method
-IntList& IntList:: operator =( const IntList & rhs ){
-    if( list_ )
+//IntList& IntList:: operator =( const IntList & rhs ){
+ IntList& IntList:: operator =( const IntList& rhs ) {
+
+    for ( int i = 0; i < rhs . size_ ; i ++){
+        swap (this -> list_, &rhs . list_[i] );
+    }
+    return *this;
+}
+    /*if( list_ )
         delete [] list_ ;
     size_ = rhs . size_ ;
     if( rhs . size_ > 0){
@@ -50,12 +78,6 @@ IntList& IntList:: operator =( const IntList & rhs ){
         list_ = 0;
 
 return *this;
-}
+}*/
 
-int main(){
 
-    IntList L1 (5,0);
-    //4- declare L2 and make that l2=l1 is properly working
-
-   return 0;
-}

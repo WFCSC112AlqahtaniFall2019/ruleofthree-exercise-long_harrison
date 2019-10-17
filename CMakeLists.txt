@@ -3,4 +3,4 @@ project(RuleOfThree)
 
 set(CMAKE_CXX_STANDARD 14)
 
-add_executable(RuleOfThree main.cpp)
+add_executable(RuleOfThree main.cpp cmake-build-debug/IntList.cpp cmake-build-debug/IntList.h)
